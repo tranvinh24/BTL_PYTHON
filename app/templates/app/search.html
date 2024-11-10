@@ -1,0 +1,42 @@
+{% extends "app/base.html" %}
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {% block search %}
+        <h5 style="font-size: 1.5rem; text-align: center; color: black; font-weight: bold; margin-top: 20px;">
+            Kết quả tìm kiếm cho sản phẩm bạn cần
+        </h5>
+        <br/>
+        
+        <div class="row">
+         {% if keys %}
+            {%for product in keys%}
+              <div class="col-lg-3">
+                  <div class="product-image-container" style="text-align: center;">
+                      <img class="thumbnail" src="{{product.ImageURL}}" style="width: 70%; height: 80%; object-fit: cover; margin-bottom: 10px;">
+                  </div>
+                  <div class="box-element product">
+                      <h6><strong>{{product.name}}</strong></h6>
+                      <hr>
+                      <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Thêm vào giỏ hàng</button>
+                      <a class="btn btn-outline-success" href="{% url 'detail' %}?id={{product.id}}">Mô tả</a>
+                      <h3 style="display: inline-block; float: right"><strong>{{product.price | floatformat:2}}$</strong></h3>
+                  </div>
+              </div>
+           
+            {% endfor %}
+         {% else %}
+            <p class="text-center text-danger">Không thể tìm thấy sản phẩm</p>
+         {% endif %}
+          </div>
+        {% endblock search %}
+    </body>
+</html>
